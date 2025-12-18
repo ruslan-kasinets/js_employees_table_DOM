@@ -93,10 +93,6 @@ tbody.addEventListener('click', (e) => {
 let title;
 let message;
 let type;
-const messageSuccess = 'Працівника додано!';
-const messageError = 'Введіть коректні дані';
-const titleSuccess = 'Успіх';
-const titleError = 'Помилка';
 
 const pushNotification = (titleText, description, typeText) => {
   const popup = document.createElement('div');
@@ -120,7 +116,7 @@ form.classList.add('new-employee-form');
 
 form.innerHTML = `
   <label>Name: <input name="name" type="text" data-qa="name" required></label>
-  <label>Position: <input name="position" type="text" data-qa="position" required></label>
+  <label>Position: <input name="position" type="text" data-qa="position"></label>
   <label>Office:
     <select name="office" data-qa="office" required>
       <option value="" disabled selected>Select office</option>
@@ -150,16 +146,21 @@ form.addEventListener('submit', (e) => {
     salary: Number(formData.get('salary')),
   };
 
-  if (employee.name.length < 4 || employee.age < 18 || employee.age > 90) {
+  if (
+    employee.name.length < 4 ||
+    employee.age < 18 ||
+    employee.age > 90 ||
+    employee.position.length === 0
+  ) {
     type = 'error';
-    message = messageError;
-    title = titleError;
+    message = 'Введіть коректні дані';
+    title = 'Помилка';
 
     pushNotification(title, message, type);
   } else {
     type = 'success';
-    message = messageSuccess;
-    title = titleSuccess;
+    message = 'Працівника додано!';
+    title = 'Успіх';
 
     addEmployeeToTable(employee);
     pushNotification(title, message, type);
