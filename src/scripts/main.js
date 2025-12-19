@@ -115,10 +115,10 @@ const form = document.createElement('form');
 form.classList.add('new-employee-form');
 
 form.innerHTML = `
-  <label>Name: <input name="name" type="text" data-qa="name" required></label>
+  <label>Name: <input name="name" type="text" data-qa="name"></label>
   <label>Position: <input name="position" type="text" data-qa="position"></label>
   <label>Office:
-    <select name="office" data-qa="office" required>
+    <select name="office" data-qa="office">
       <option value="" disabled selected>Select office</option>
       <option>Tokyo</option>
       <option>Singapore</option>
@@ -128,8 +128,8 @@ form.innerHTML = `
       <option>San Francisco</option>
     </select>
   </label>
-  <label>Age: <input name="age" type="number" data-qa="age" required></label>
-  <label>Salary: <input name="salary" type="number" data-qa="salary" required></label>
+  <label>Age: <input name="age" type="number" data-qa="age"></label>
+  <label>Salary: <input name="salary" type="number" data-qa="salary"></label>
   <button type="submit">Save to table</button>
   `;
 body.append(form);
@@ -150,6 +150,8 @@ form.addEventListener('submit', (e) => {
     employee.name.length < 4 ||
     employee.age < 18 ||
     employee.age > 90 ||
+    employee.position.length < 0 ||
+    employee.office.length === 0 ||
     employee.position.length === 0
   ) {
     type = 'error';
@@ -198,6 +200,7 @@ tbody.addEventListener('dblclick', (e) => {
   const oldValue = currentCell.textContent.trim();
   const input = document.createElement('input');
 
+  input.value = oldValue;
   input.classList.add('cell-input');
 
   currentCell.textContent = '';
