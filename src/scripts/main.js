@@ -151,8 +151,9 @@ form.addEventListener('submit', (e) => {
     employee.age < 18 ||
     employee.age > 90 ||
     employee.position.length === 0 ||
-    employee.office.length === 0 ||
-    employee.salary.length === 0
+    !employee.office ||
+    !employee.salary ||
+    employee.salary <= 0
   ) {
     type = 'error';
     message = 'Введіть коректні дані';
